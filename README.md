@@ -327,172 +327,170 @@ flowchart TB
 
 ---
 
-## ۵. تصمیم‌گیری‌های معماری (Architecture Decision Records - ADR)
+## ۵. تصمیم‌گیری‌های معماری (<span dir="ltr">Architecture Decision Records</span> - <span dir="ltr">ADR</span>)
 
-### 📌 فهرست ADRها
-- **ADR-001** — Microservices Architecture  
-- **ADR-002** — JWT-based Authentication  
-- **ADR-003** — API Gateway  
-- **ADR-004** — Event-driven Communication (RabbitMQ)  
-- **ADR-005** — Saga Pattern for Purchase Flow  
-- **ADR-006** — Circuit Breaker in Exam Service  
-- **ADR-007** — Redis for Cache & Distributed Lock  
-- **ADR-008** — Database-per-Service  
-- **ADR-009** — Multi-Tenancy with Schema-per-Tenant  
+### 📌 فهرست <span dir="ltr">ADR</span>ها
+- <span dir="ltr">**ADR-001**</span> — <span dir="ltr">Microservices Architecture</span>  
+- <span dir="ltr">**ADR-002**</span> — <span dir="ltr">JWT-based Authentication</span>  
+- <span dir="ltr">**ADR-003**</span> — <span dir="ltr">API Gateway</span>  
+- <span dir="ltr">**ADR-004**</span> — <span dir="ltr">Event-driven Communication (RabbitMQ)</span>  
+- <span dir="ltr">**ADR-005**</span> — <span dir="ltr">Saga Pattern for Purchase Flow</span>  
+- <span dir="ltr">**ADR-006**</span> — <span dir="ltr">Circuit Breaker in Exam Service</span>  
+- <span dir="ltr">**ADR-007**</span> — <span dir="ltr">Redis for Cache & Distributed Lock</span>  
+- <span dir="ltr">**ADR-008**</span> — <span dir="ltr">Database-per-Service</span>  
+- <span dir="ltr">**ADR-009**</span> — <span dir="ltr">Multi-Tenancy with Schema-per-Tenant</span>  
 
 ---
 
 <details>
-<summary><b>ADR-001</b> — انتخاب معماری Microservices</summary>
+<summary><span dir="ltr"><b>ADR-001</b></span> — انتخاب معماری <span dir="ltr">Microservices</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
 سیستم شامل دامنه‌های مستقل مانند احراز هویت، رزرو منابع، بازارچه، آزمون آنلاین و اینترنت اشیا است. نیاز به مقیاس‌پذیری، توسعه مستقل و تحمل خطا وجود دارد که معماری مونولیتیک پاسخ‌گوی آن نیست.
 
 **Decision:**  
-معماری Microservices انتخاب شد؛ هر قابلیت به‌صورت سرویس مستقل با چرخه توسعه و استقرار جداگانه پیاده‌سازی می‌شود.
+معماری <span dir="ltr">Microservices</span> انتخاب شد؛ هر قابلیت به‌صورت سرویس مستقل با چرخه توسعه و استقرار جداگانه پیاده‌سازی می‌شود.
 
 **Consequences:**  
-- مزایا: مقیاس‌پذیری مستقل، Fault Isolation، توسعه موازی  
-- معایب: پیچیدگی DevOps، نیاز به مانیتورینگ و لاگ‌گیری پیشرفته  
+- مزایا: مقیاس‌پذیری مستقل، <span dir="ltr">Fault Isolation</span>، توسعه موازی  
+- معایب: پیچیدگی <span dir="ltr">DevOps</span>، نیاز به مانیتورینگ و لاگ‌گیری پیشرفته  
 
 </details>
 
 <details>
-<summary><b>ADR-002</b> — استفاده از احراز هویت مبتنی بر JWT</summary>
+<summary><span dir="ltr"><b>ADR-002</b></span> — استفاده از احراز هویت مبتنی بر <span dir="ltr">JWT</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
-در معماری میکروسرویس، استفاده از Session باعث Stateful شدن سرویس‌ها و دشواری در Scale-out می‌شود.
+در معماری میکروسرویس، استفاده از <span dir="ltr">Session</span> باعث <span dir="ltr">Stateful</span> شدن سرویس‌ها و دشواری در <span dir="ltr">Scale-out</span> می‌شود.
 
 **Decision:**  
-احراز هویت مبتنی بر JWT انتخاب شد. سرویس Auth توکن صادر می‌کند و API Gateway مسئول اعتبارسنجی آن است.
+احراز هویت مبتنی بر <span dir="ltr">JWT</span> انتخاب شد. سرویس <span dir="ltr">Auth</span> توکن صادر می‌کند و <span dir="ltr">API Gateway</span> مسئول اعتبارسنجی آن است.
 
 **Consequences:**  
-- مزایا: Stateless بودن، سازگاری با مقیاس‌پذیری افقی  
+- مزایا: <span dir="ltr">Stateless</span> بودن، سازگاری با مقیاس‌پذیری افقی  
 - معایب: ابطال توکن دشوارتر، نیاز به مدیریت امن کلیدها  
 
 </details>
 
 <details>
-<summary><b>ADR-003</b> — استفاده از API Gateway</summary>
+<summary><span dir="ltr"><b>ADR-003</b></span> — استفاده از <span dir="ltr">API Gateway</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
 دسترسی مستقیم کلاینت به سرویس‌ها باعث افزایش پیچیدگی، مشکلات امنیتی و سختی مدیریت نسخه‌ها می‌شود.
 
 **Decision:**  
-API Gateway به‌عنوان نقطه ورود واحد برای Routing، Authentication، Rate Limiting و مدیریت نسخه‌ها استفاده شد.
+<span dir="ltr">API Gateway</span> به‌عنوان نقطه ورود واحد برای <span dir="ltr">Routing</span>، <span dir="ltr">Authentication</span>، <span dir="ltr">Rate Limiting</span> و مدیریت نسخه‌ها استفاده شد.
 
 **Consequences:**  
 - مزایا: امنیت متمرکز، کاهش پیچیدگی کلاینت  
-- معایب: Single Point of Failure (نیازمند HA)  
+- معایب: <span dir="ltr">Single Point of Failure</span> (نیازمند <span dir="ltr">HA</span>)  
 
 </details>
 
 <details>
-<summary><b>ADR-004</b> — ارتباط رویدادمحور با RabbitMQ</summary>
+<summary><span dir="ltr"><b>ADR-004</b></span> — ارتباط رویدادمحور با <span dir="ltr">RabbitMQ</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
-ارتباط Sync بین سرویس‌ها Coupling بالا و شکست آبشاری ایجاد می‌کند.
+ارتباط <span dir="ltr">Sync</span> بین سرویس‌ها <span dir="ltr">Coupling</span> بالا و شکست آبشاری ایجاد می‌کند.
 
 **Decision:**  
-ارتباط Event-driven با RabbitMQ برای ارتباط ناهمزمان بین سرویس‌ها انتخاب شد.
+ارتباط <span dir="ltr">Event-driven</span> با <span dir="ltr">RabbitMQ</span> برای ارتباط ناهمزمان بین سرویس‌ها انتخاب شد.
 
 **Consequences:**  
-- مزایا: کاهش Coupling، افزایش Fault Tolerance  
-- معایب: دیباگ سخت‌تر، نیاز به Correlation ID  
+- مزایا: کاهش <span dir="ltr">Coupling</span>، افزایش <span dir="ltr">Fault Tolerance</span>  
+- معایب: دیباگ سخت‌تر، نیاز به <span dir="ltr">Correlation ID</span>  
 
 </details>
 
 <details>
-<summary><b>ADR-005</b> — استفاده از الگوی Saga در فرآیند خرید</summary>
+<summary><span dir="ltr"><b>ADR-005</b></span> — استفاده از الگوی <span dir="ltr">Saga</span> در فرآیند خرید</summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
-فرآیند خرید توزیع‌شده و چندمرحله‌ای است و استفاده از 2PC مناسب نیست.
+فرآیند خرید توزیع‌شده و چندمرحله‌ای است و استفاده از <span dir="ltr">2PC</span> مناسب نیست.
 
 **Decision:**  
-الگوی Saga (Orchestration-based) برای مدیریت تراکنش‌های توزیع‌شده انتخاب شد.
+الگوی <span dir="ltr">Saga</span> (مدل <span dir="ltr">Orchestration-based</span>) برای مدیریت تراکنش‌های توزیع‌شده انتخاب شد.
 
 **Consequences:**  
-- مزایا: مدیریت خطا و جبران بدون 2PC  
-- معایب: پیچیدگی منطق و نیاز به Idempotency  
+- مزایا: مدیریت خطا و جبران بدون <span dir="ltr">2PC</span>  
+- معایب: پیچیدگی منطق و نیاز به <span dir="ltr">Idempotency</span>  
 
 </details>
 
 <details>
-<summary><b>ADR-006</b> — استفاده از Circuit Breaker در سرویس آزمون</summary>
+<summary><span dir="ltr"><b>ADR-006</b></span> — استفاده از <span dir="ltr">Circuit Breaker</span> در سرویس آزمون</summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
 خرابی سرویس‌های وابسته (مانند اعلان) نباید باعث از کار افتادن سرویس آزمون شود.
 
 **Decision:**  
-الگوی Circuit Breaker برای فراخوانی‌های حساس در سرویس آزمون استفاده شد.
+الگوی <span dir="ltr">Circuit Breaker</span> برای فراخوانی‌های حساس در سرویس آزمون استفاده شد تا <span dir="ltr">Fail Fast</span> فعال شود.
 
 **Consequences:**  
-- مزایا: جلوگیری از Failure Cascading، Fail Fast  
-- معایب: نیاز به تنظیم دقیق Thresholdها  
+- مزایا: جلوگیری از <span dir="ltr">Failure Cascading</span>، افزایش دسترس‌پذیری  
+- معایب: نیاز به تنظیم دقیق <span dir="ltr">Threshold</span>ها  
 
 </details>
 
 <details>
-<summary><b>ADR-007</b> — استفاده از Redis برای کش و قفل توزیع‌شده</summary>
+<summary><span dir="ltr"><b>ADR-007</b></span> — استفاده از <span dir="ltr">Redis</span> برای کش و قفل توزیع‌شده</summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
-رزرو منابع نیازمند جلوگیری از Overbooking و پاسخ‌دهی سریع است.
+رزرو منابع نیازمند جلوگیری از <span dir="ltr">Overbooking</span> و پاسخ‌دهی سریع است.
 
 **Decision:**  
-Redis برای Cache و Distributed Lock (با TTL) انتخاب شد.
+<span dir="ltr">Redis</span> برای <span dir="ltr">Cache</span> و <span dir="ltr">Distributed Lock</span> (با <span dir="ltr">TTL</span>) انتخاب شد.
 
 **Consequences:**  
-- مزایا: افزایش Performance، کاهش بار دیتابیس  
-- معایب: نیاز به طراحی دقیق قفل‌ها و HA  
+- مزایا: افزایش <span dir="ltr">Performance</span>، کاهش بار دیتابیس  
+- معایب: نیاز به طراحی دقیق قفل‌ها و <span dir="ltr">HA</span>  
 
 </details>
 
 <details>
-<summary><b>ADR-008</b> — Database-per-Service</summary>
+<summary><span dir="ltr"><b>ADR-008</b></span> — <span dir="ltr">Database-per-Service</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
-اشتراک دیتابیس بین سرویس‌ها استقلال میکروسرویس‌ها را نقض می‌کند.
+اشتراک دیتابیس بین سرویس‌ها استقلال میکروسرویس‌ها را نقض می‌کند و <span dir="ltr">Coupling</span> ایجاد می‌کند.
 
 **Decision:**  
-هر سرویس دیتابیس اختصاصی خود را دارد و تبادل داده فقط از طریق API یا Event انجام می‌شود.
+هر سرویس دیتابیس اختصاصی خود را دارد و تبادل داده فقط از طریق <span dir="ltr">API</span> یا <span dir="ltr">Event</span> انجام می‌شود.
 
 **Consequences:**  
-- مزایا: Data Isolation، استقلال سرویس‌ها  
-- معایب: سختی Query بین‌سرویسی و گزارش‌گیری  
+- مزایا: <span dir="ltr">Data Isolation</span>، استقلال سرویس‌ها  
+- معایب: سختی <span dir="ltr">Query</span> بین‌سرویسی و گزارش‌گیری  
 
 </details>
 
 <details>
-<summary><b>ADR-009</b> — چندمستأجری با Schema-per-Tenant</summary>
+<summary><span dir="ltr"><b>ADR-009</b></span> — چندمستأجری با <span dir="ltr">Schema-per-Tenant</span></summary>
 
-**Status:** Accepted  
+**Status:** <span dir="ltr">Accepted</span>  
 
 **Context:**  
 سیستم باید چند دانشگاه را با ایزولاسیون داده و امنیت بالا پشتیبانی کند.
 
 **Decision:**  
-الگوی Schema-per-Tenant برای جداسازی داده هر Tenant انتخاب شد.
+الگوی <span dir="ltr">Schema-per-Tenant</span> برای جداسازی داده هر <span dir="ltr">Tenant</span> انتخاب شد.
 
 **Consequences:**  
-- مزایا: ایزولاسیون قوی، Backup ساده‌تر  
-- معایب: Migration پیچیده‌تر با افزایش Tenantها  
+- مزایا: ایزولاسیون قوی، <span dir="ltr">Backup</span> ساده‌تر  
+- معایب: <span dir="ltr">Migration</span> پیچیده‌تر با افزایش <span dir="ltr">Tenant</span>ها  
 
 </details>
-
-
