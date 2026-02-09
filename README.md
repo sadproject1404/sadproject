@@ -377,7 +377,7 @@ flowchart TB
 </details>
 
 <details>
-<summary><span dir="ltr"><b>ADR-003</b></span> — استفاده از <span dir="ltr">API Gateway</span></summary>
+<summary><span dir="ltr"><b>ADR-003</b></span> — <span dir="ltr">API Gateway استفاده از </span></summary>
 
 **Status:** <span dir="ltr">Accepted</span>  
 
@@ -394,7 +394,7 @@ flowchart TB
 </details>
 
 <details>
-<summary><span dir="ltr"><b>ADR-004</b></span> — ارتباط رویدادمحور با <span dir="ltr">RabbitMQ</span></summary>
+<summary><span dir="ltr"><b>ADR-004</b></span> — <span dir="ltr">RabbitMQ ارتباط رویدادمحور با </span></summary>
 
 **Status:** <span dir="ltr">Accepted</span>  
 
