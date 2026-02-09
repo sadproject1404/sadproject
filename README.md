@@ -360,7 +360,7 @@ flowchart TB
 </details>
 
 <details>
-<summary><span dir="ltr"><b>ADR-002</b></span> — استفاده از احراز هویت مبتنی بر <span dir="ltr">JWT</span></summary>
+<summary><span dir="ltr"><b>ADR-002</b></span> — <span dir="ltr">JWT استفاده از احراز هویت مبتنی بر </span></summary>
 
 **Status:** <span dir="ltr">Accepted</span>  
 
