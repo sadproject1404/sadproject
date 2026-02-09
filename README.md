@@ -479,7 +479,7 @@ flowchart TB
 </details>
 
 <details>
-<summary><span dir="ltr"><b>ADR-009</b></span> — چندمستأجری با <span dir="ltr">Schema-per-Tenant</span></summary>
+<summary><span dir="ltr"><b>ADR-009</b></span> —  <span dir="ltr">Schema-per-Tenant چندمستأجری با </span></summary>
 
 **Status:** <span dir="ltr">Accepted</span>  
 
