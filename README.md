@@ -343,7 +343,7 @@ flowchart TB
 ---
 
 <details>
-<summary><span dir="ltr"><b>ADR-001</b></span> — انتخاب معماری <span dir="ltr">Microservices</span></summary>
+<summary><span dir="ltr"><b>ADR-001</b></span> —  <span dir="ltr">Microservices انتخاب معماری </span></summary>
 
 **Status:** <span dir="ltr">Accepted</span>  
 
