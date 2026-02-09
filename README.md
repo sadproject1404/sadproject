@@ -331,31 +331,16 @@ flowchart TB
 <details>
 <summary>مشاهده فهرست کامل تصمیم‌گیری‌های معماری (<span dir="ltr">ADR</span>)</summary>
 
-✔ <span dir="ltr">**ADR-001**</span> — انتخاب معماری <span dir="ltr">میکروسرویس‌ها</span> به‌جای <span dir="ltr">مونولیتیک</span>  
-در این پروژه نیازمند استقلال سرویس‌ها، توسعه‌ی مستقل، مقیاس‌پذیری جداگانه و مدیریت ساده‌تر بودیم. معماری <span dir="ltr">مونولیتیک</span> با بزرگ شدن پروژه پیچیده و کند می‌شود، اما معماری <span dir="ltr">میکروسرویس‌ها</span> امکان توسعه‌ی مستقل با <span dir="ltr">دیتابیس</span> و <span dir="ltr">تکنولوژی</span> مخصوص هر سرویس را فراهم می‌کند و عایق‌بندی خطا (<span dir="ltr">Fault Isolation</span>) را به شکل بسیار بهتری تضمین می‌کند.
-
-✔ <span dir="ltr">**ADR-002**</span> — انتخاب توکن <span dir="ltr">JWT</span> به‌جای <span dir="ltr">Session</span>  
-در معماری <span dir="ltr">میکروسرویس</span>، استفاده از <span dir="ltr">Session</span> باعث وابستگی و ذخیره‌سازی حالت می‌شود. توکن <span dir="ltr">JWT</span> سرویس‌ها را کاملاً بدون حالت (<span dir="ltr">Stateless</span>) نگه می‌دارد و دروازه <span dir="ltr">API</span> مسئولیت اعتبارسنجی توکن را بر عهده دارد.
-
-✔ <span dir="ltr">**ADR-003**</span> — استفاده از دروازه <span dir="ltr">API</span> (<span dir="ltr">API Gateway</span>)  
-دروازه <span dir="ltr">API</span> نقطه‌ی ورود واحد و امن به کل سیستم است و امکان مدیریت احراز هویت، جلوگیری از حملات، ساده‌سازی مسیریابی و کاهش پیچیدگی سمت <span dir="ltr">کلاینت</span> را فراهم می‌کند.
-
-✔ <span dir="ltr">**ADR-004**</span> — انتخاب <span dir="ltr">RabbitMQ</span> برای ارتباط رویدادمحور  
-<span dir="ltr">RabbitMQ</span> بهترین گزینه برای ارتباط غیرهمزمان، کاملاً جدا شده و مقاوم در برابر خطا بین سرویس‌هاست. قابلیت‌هایی مانند تلاش مجدد، مسیریابی پیشرفته و صف مرده از اثر زنجیره‌ای خرابی‌ها جلوگیری می‌کند.
-
-✔ <span dir="ltr">**ADR-005**</span> — استفاده از الگوی ساگا (<span dir="ltr">Saga</span>) در فرآیند خرید  
-فرآیند خرید چندمرحله‌ای و توزیع‌شده است و هماهنگی دو مرحله‌ای (<span dir="ltr">2PC</span>) قابل استفاده نیست. الگوی ساگا با ترکیب اقدام اصلی و جبران‌کننده، مدیریت خطا را به شکل قابل‌اعتماد انجام می‌دهد.
-
-✔ <span dir="ltr">**ADR-006**</span> — استفاده از الگوی قطع‌کننده مدار (<span dir="ltr">Circuit Breaker</span>) در سرویس آزمون  
-برای جلوگیری از شکست آبشاری هنگام از کار افتادن سرویس اعلان، از الگوی قطع‌کننده مدار استفاده شده تا مکانیزم شکست سریع فعال شود.
-
+✔ <span dir="ltr">**ADR-001**</span> — انتخاب معماری <span dir="ltr">Microservices</span>  
+✔ <span dir="ltr">**ADR-002**</span> — استفاده از احراز هویت مبتنی بر <span dir="ltr">JWT</span>  
+✔ <span dir="ltr">**ADR-003**</span> — استفاده از <span dir="ltr">API Gateway</span>  
+✔ <span dir="ltr">**ADR-004**</span> — ارتباط رویدادمحور با <span dir="ltr">RabbitMQ</span>  
+✔ <span dir="ltr">**ADR-005**</span> — پیاده‌سازی الگوی <span dir="ltr">Saga</span> در فرآیند خرید  
+✔ <span dir="ltr">**ADR-006**</span> — استفاده از <span dir="ltr">Circuit Breaker</span> در سرویس آزمون  
 ✔ <span dir="ltr">**ADR-007**</span> — انتخاب <span dir="ltr">Redis</span> برای کش و قفل توزیع‌شده  
-<span dir="ltr">Redis</span> به دلیل سرعت بالا، زمان انقضا و پشتیبانی از قفل توزیع‌شده انتخاب شد؛ برای جلوگیری از رزرو بیش از حد و پردازش سریع داده‌های اینترنت اشیا ضروری است.
-
-✔ <span dir="ltr">**ADR-008**</span> — انتخاب الگوی <span dir="ltr">دیتابیس</span> مجزا برای هر سرویس (<span dir="ltr">Database-per-Service</span>)  
-هر سرویس <span dir="ltr">دیتابیس</span> کاملاً جداگانه‌ای دارد تا وابستگی داده‌ای حذف شود.
-
-✔ <span dir="ltr">**ADR-009**</span> — انتخاب الگوی جداسازی در سطح <span dir="ltr">اسکیما</span> برای چندمستأجری (<span dir="ltr">Schema-per-Tenant</span>)  
-برای پشتیبانی همزمان از چندین دانشگاه، داده‌ها در سطح <span dir="ltr">اسکیما</span> جدا شده‌اند تا امنیت، <span dir="ltr">ایزولاسیون</span> و مدیریت پشتیبان‌گیری ساده‌تر شود.
+✔ <span dir="ltr">**ADR-008**</span> — استفاده از <span dir="ltr">Database-per-Service</span>  
+✔ <span dir="ltr">**ADR-009**</span> — پیاده‌سازی چندمستأجری با <span dir="ltr">Schema-per-Tenant</span>  
 
 </details>
+
+
